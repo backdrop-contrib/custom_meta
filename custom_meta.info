@@ -1,0 +1,4 @@
+name = custom_meta
+description = Adds user defined custom meta tags.
+package = Third Party Integration
+core = 6.x
