@@ -5,71 +5,67 @@
  */
 
 /**
- * Implementation of hook_perm
- * 
+ * Implements hook_perm().
+ *
  */
 function custom_meta_perm() {
-  return array('administer MLS custom meta settings');
+  return array('administer custom meta settings');
 }
 
 /**
- * Implementation of hook_init
- * Setup the fb:app tag in the head with the facebook app id setting stored in variable table.
+ * Implements hook_init.
+ * Places defined custom meta tags in the head of the document for non-administration pages.
  *
  */
 function custom_meta_init() {
   $data = '';
-  $meta_tags = custom_meta_get_tags(NULL);
-  // Place tags in html head if not in admin section
   if ($meta_tags && arg(0) != 'admin') {
     foreach ($meta_tags as $key => $meta_tag) {
       $data .= '<meta ' . check_plain($meta_tag['mls_meta_attr']) . '="' . check_plain($meta_tag['mls_meta_attr_value']) . '" content="' . check_plain($meta_tag['mls_meta_content']) . '">';
     }
   }
-  
   drupal_set_html_head($data);
-  
 }
 
 /**
- * Implementation of hook_menu.
+ * Implements hook_menu.
  *
  */
 function custom_meta_menu() {
   $items = array();
-
   $items['admin/settings/custom_meta'] = array(
     'type' => MENU_NORMAL_ITEM,
-    'title' => t('MLS Custom Meta Tag Settings'),
-    'description' => t('Settings for custom_meta'),
+    'title' => t('Custom Meta Tag Settings'),
+    'description' => t('Settings for the custom_meta module.'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('custom_meta_form'),
     'file' => 'custom_meta.admin.inc',
     'access callback' => 'user_access',
-    'access arguments' => array('administer MLS custom meta settings'),
+    'access arguments' => array('administer custom meta settings'),
     );
   $items['admin/settings/custom_meta/edit/%'] = array(
-    'title' => 'MLS Meta Settings Edit Tag',
+    'title' => 'Custom Meta Settings - Edit Tag',
     'description' => 'Re-configure existing tags.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('custom_meta_edit_form', 4),
     'file' => 'custom_meta.admin.inc',
-    'access arguments' => array('administer MLS custom meta settings'),
+    'access arguments' => array('administer custom meta settings'),
     'type' => MENU_CALLBACK,
   );
   $items['admin/settings/custom_meta/remove/%'] = array(
     'page callback' => 'drupal_get_form',
     'page arguments' => array('custom_meta_remove_tag', 4),
     'file' => 'custom_meta.admin.inc',
-    'access arguments' => array('administer MLS custom meta settings'),
+    'access arguments' => array('administer custom meta settings'),
     'type' => MENU_CALLBACK,
   );
-
   return $items;
 }
 
 /**
- * Get the custom tags from the db
+ * Get the a single tag or all custom tags from the db.
+ * @param $id (int) unique id of a tag in the db.
+ * @return returns array of specified tag or all tags.
  */
 function custom_meta_get_tags($id) {
   $return = '';
@@ -87,14 +83,17 @@ function custom_meta_get_tags($id) {
 }
 
 /**
- * Set the info in the db
+ * Set the custom tags to the db.
+ * @param $attr
+ * @param $attr_value
+ * @param $meta_content
  */
 function custom_meta_set_tag($attr, $attr_value, $meta_content) {
   db_query("INSERT INTO {custom_meta} (mls_meta_attr, mls_meta_attr_value, mls_meta_content) VALUES ('%s', '%s', '%s')", $attr, $attr_value, $meta_content);
 }
 
 /**
- * Delete the tag in the db
+ * Delete the tag in the db.
  */
 function custom_meta_remove_tag() {
   $id = arg(4);

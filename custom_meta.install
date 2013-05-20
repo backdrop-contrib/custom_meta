@@ -4,14 +4,12 @@
  * mls custom meta install
  */
 /**
- * Implementation of hook_schema().
- *
- * TODO: Describe the module's data model
+ * Implements hook_schema().
  *
  */
 function custom_meta_schema() {
   $schema = array();
-  
+
   $schema['custom_meta'] = array(
     'description' => t('Table to store meta tag attributes'),
     'fields' => array(
@@ -47,23 +45,21 @@ function custom_meta_schema() {
 }
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  *
- * Perform initial setup tasks
+ * Perform initial setup tasks.
  *
  */
 function custom_meta_install() {
-  // Perform install stuffz
   drupal_install_schema('custom_meta');
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  *
- * Perform final cleanup tasks
+ * Perform final cleanup tasks.
  *
  */
 function custom_meta_uninstall() {
-  // perform uninstall stuffz
   drupal_uninstall_schema('custom_meta');
 }
