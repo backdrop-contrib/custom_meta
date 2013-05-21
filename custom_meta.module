@@ -78,7 +78,11 @@ function custom_meta_menu() {
 }
 
 /**
- * Get the custom tags from the db.
+ * custom_meta_get_tags
+ * Retrieves the custom tags from the db.
+ *
+ * @param $id: Meta uid of the tag.
+ * @return The requested tag.
  */
 function custom_meta_get_tags($id = '') {
   $return = '';
@@ -96,7 +100,12 @@ function custom_meta_get_tags($id = '') {
 }
 
 /**
- * Set the info in the db.
+ * custom_meta_set_tag
+ * Sets the tag in the database.
+ *
+ * @param $attr: Tag's attribute type.
+ * @param $attr_value: Tag's attribute valur.
+ * @param $meta_content: Tag's content.
  */
 function custom_meta_set_tag($attr, $attr_value, $meta_content) {
   db_insert('custom_meta')
@@ -109,7 +118,9 @@ function custom_meta_set_tag($attr, $attr_value, $meta_content) {
 }
 
 /**
- * Delete the tag in the db.
+ * custom_meta_remove_tag
+ * Deletes the tag in the database.
+ *
  */
 function custom_meta_remove_tag() {
   $id = arg(4);

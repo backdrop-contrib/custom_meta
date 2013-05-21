@@ -7,8 +7,10 @@
  */
 
 /**
+ * custom_meta_form
  * Creates admin form.
  *
+ * @return Form for administering module.
  */
 function custom_meta_form() {
   $form = array();
@@ -61,8 +63,10 @@ function custom_meta_form() {
 }
 
 /**
+ * custom_meta_edit_form
  * Creates editing form for tags.
  *
+ * @return Form for editing tags.
  */
 function custom_meta_edit_form() {
   $form = array();
@@ -101,8 +105,11 @@ function custom_meta_edit_form() {
 }
 
 /**
- * Form validation for main form.
+ * custom_meta_form_validate
+ * Form validation for custom_meta_form.
  *
+ * @param $form: custom_meta_form.
+ * @param &$form_state: Reference to state of custom_meta_form.
  */
 function custom_meta_form_validate($form, &$form_state) {
   $atvalue = $form_state['values']['custom_meta_attribute_value'];
@@ -116,8 +123,11 @@ function custom_meta_form_validate($form, &$form_state) {
 }
 
 /**
- * Submission function for custom_meta_form.
+ * custom_meta_form_submit
+ * Form submission for custom_meta_form.
  *
+ * @param $form: custom_meta_form.
+ * @param &$form_state: Reference to state of custom_meta_form.
  */
 function custom_meta_form_submit(&$form, &$form_state) {
   drupal_set_message(t('All your tag belong to us. Tag saved.'));
@@ -126,8 +136,11 @@ function custom_meta_form_submit(&$form, &$form_state) {
 }
 
 /**
- * Submission function for custom_meta_edit_form.
+ * custom_meta_edit_form_submit
+ * Form submission for custom_meta_edit_form.
  *
+ * @param $form: custom_meta_edit_form.
+ * @param &$form_state: Reference to state of custom_meta_edit_form.
  */
 function custom_meta_edit_form_submit(&$form, &$form_state) {
   db_update('custom_meta')
