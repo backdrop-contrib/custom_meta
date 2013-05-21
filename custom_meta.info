@@ -1,4 +1,5 @@
-name = custom_meta
+name = Custom Meta
 description = Adds user defined custom meta tags.
 package = Third Party Integration
-core = 6.x
+core = 7.x
+files[] = custom_meta.module

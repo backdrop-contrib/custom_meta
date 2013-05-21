@@ -1,4 +1,12 @@
--Drupal--Custom-Meta
-====================
+# custom_meta
 
-Custom meta module for Drupal 6/7
+## Dependencies
+- Contributed module dependencies (none)
+- Custom module dependencies (none)
+
+## Version / Author
+1.0 Hans Gutknecht
+1.1 Louis Jimenez
+
+## Description
+Adds user defined custom meta tags

@@ -1,69 +1,45 @@
 <?php
 /**
  * @file
- * mls custom meta install
+ * custom meta install
  */
+
 /**
- * Implementation of hook_schema().
- *
- * TODO: Describe the module's data model
- *
+ * Implements hook_schema().
  */
 function custom_meta_schema() {
   $schema = array();
-  
+
   $schema['custom_meta'] = array(
-    'description' => t('Table to store meta tag attributes'),
+    'description' => 'Table to store meta tag attributes',
     'fields' => array(
-      'mls_meta_uid' => array(
-        'description' => t('Unique id for the tweet block'),
+      'meta_uid' => array(
+        'description' => 'Unique id for the tweet block',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'mls_meta_attr' => array(
-        'description' => t('Meta attribute name'),
+      'meta_attr' => array(
+        'description' => 'Meta attribute name',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
-      'mls_meta_attr_value' => array(
-        'description' => t('Meta attribute value'),
+      'meta_attr_value' => array(
+        'description' => 'Meta attribute value',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
-      'mls_meta_content' => array(
-        'description' => t('Meta content value'),
+      'meta_content' => array(
+        'description' => 'Meta content value',
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('mls_meta_uid'),
+    'primary key' => array('meta_uid'),
   );
 
   return $schema;
-}
-
-/**
- * Implementation of hook_install().
- *
- * Perform initial setup tasks
- *
- */
-function custom_meta_install() {
-  // Perform install stuffz
-  drupal_install_schema('custom_meta');
-}
-
-/**
- * Implementation of hook_uninstall().
- *
- * Perform final cleanup tasks
- *
- */
-function custom_meta_uninstall() {
-  // perform uninstall stuffz
-  drupal_uninstall_schema('custom_meta');
 }

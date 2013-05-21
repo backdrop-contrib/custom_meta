@@ -3,13 +3,18 @@
  * @file
  * Admin form to add custom meta tags
  * custom_meta_form. Hans.Gutknecht@mlssoccer.com
- * 
+ *
+ */
+
+/**
+ * Creates admin form.
+ *
  */
 function custom_meta_form() {
   $form = array();
   $form['description'] = array(
     '#prefix' => '<div>',
-    '#value' => 'The Custom Meta module provides an interface for adding meta tags. This will add the created meta tags to the html head of all non-admin pages. Be careful with the http-equiv meta attribute, these are added to <strong>ALL PAGES</strong>, so you could very easily break your site with redirects, expires, etc.<br /><br />Formatting for tags <em>&lt;meta [Meta Attribute]="[Attribute Value]" content="[Content value]"&gt;</em>',
+    '#markup' => 'The Custom Meta module provides an interface for adding meta tags. This will add the created meta tags to the html head of all non-admin pages. Be careful with the http-equiv meta attribute, these are added to <strong>ALL PAGES</strong>, so you could very easily break your site with redirects, expires, etc.<br /><br />Formatting for tags <em>&lt;meta [Meta Attribute]="[Attribute Value]" content="[Content value]"&gt;</em>',
     '#suffix' => '</div>',
   );
   $form['custom_meta_attribute'] = array(
@@ -30,12 +35,12 @@ function custom_meta_form() {
       '#description' => t('Value for the meta content defined above'),
       '#default_value' => variable_get('custom_meta_content_value', '')
   );
-  
+
   $form['submit'] = array(
    '#type' => 'submit',
    '#value' => t('Add tag'),
   );
-  
+
   $form['custom_meta_tags'] = array(
     '#type' => 'fieldset',
     '#title' => t('List of tags'),
@@ -46,15 +51,19 @@ function custom_meta_form() {
     foreach ($meta_tags as $key => $meta_tag) {
       $form['custom_meta_tags']['meta_tag_' . $key] = array(
         '#prefix' => '<div>',
-        '#value' => '&lt;meta ' . $meta_tag['mls_meta_attr'] . '="' . $meta_tag['mls_meta_attr_value'] . '" content="' . $meta_tag['mls_meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['mls_meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/'. $meta_tag['mls_meta_uid'] . '">Remove</a>',
+        '#markup' => '&lt;meta ' . $meta_tag['meta_attr'] . '="' . $meta_tag['meta_attr_value'] . '" content="' . $meta_tag['meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/' . $meta_tag['meta_uid'] . '">Remove</a>',
         '#suffix' => '</div>',
       );
     }
   }
-  
+
   return $form;
 }
 
+/**
+ * Creates editing form for tags.
+ *
+ */
 function custom_meta_edit_form() {
   $form = array();
   $id = arg(4);
@@ -70,29 +79,29 @@ function custom_meta_edit_form() {
     '#title' => t('Meta attribute value'),
     '#type' => 'textfield',
     '#description' => t('Value for the meta attribute defined above'),
-    '#default_value' => $tag['mls_meta_attr_value']
+    '#default_value' => $tag['meta_attr_value']
   );
   $form['custom_meta_content_value'] = array(
     '#title' => t('Meta content value'),
     '#type' => 'textfield',
     '#description' => t('Value for the meta content defined above'),
-    '#default_value' => $tag['mls_meta_content']
+    '#default_value' => $tag['meta_content']
   );
-  
+
   $form['submit'] = array(
    '#type' => 'submit',
    '#value' => t('Save tag'),
   );
-  
+
   $form['cancel'] = array(
-   '#value' => '<a href="/admin/settings/custom_meta">' . t('Cancel') . '</a>',
+   '#markup' => '<a href="/admin/settings/custom_meta">' . t('Cancel') . '</a>',
   );
-  
+
   return $form;
 }
 
-/*
- * Form validation for main form
+/**
+ * Form validation for main form.
  *
  */
 function custom_meta_form_validate($form, &$form_state) {
@@ -108,6 +117,7 @@ function custom_meta_form_validate($form, &$form_state) {
 
 /**
  * Submission function for custom_meta_form.
+ *
  */
 function custom_meta_form_submit(&$form, &$form_state) {
   drupal_set_message(t('All your tag belong to us. Tag saved.'));
@@ -117,9 +127,18 @@ function custom_meta_form_submit(&$form, &$form_state) {
 
 /**
  * Submission function for custom_meta_edit_form.
+ *
  */
 function custom_meta_edit_form_submit(&$form, &$form_state) {
-  db_query("UPDATE {custom_meta} SET mls_meta_attr = '%s', mls_meta_attr_value = '%s', mls_meta_content = '%s' WHERE mls_meta_uid = '%d'", $form_state['clicked_button']['#post']['custom_meta_attribute'], $form_state['clicked_button']['#post']['custom_meta_attribute_value'], $form_state['clicked_button']['#post']['custom_meta_content_value'], arg(4));
-  drupal_goto('admin/settings/custom_meta');
+  db_update('custom_meta')
+    ->fields(array(
+      'meta_attr' => $form_state['input']['custom_meta_attribute'],
+      'meta_attr_value' => $form_state['input']['custom_meta_attribute_value'],
+      'meta_content' => $form_state['input']['custom_meta_content_value']
+    ))
+    -> condition('meta_uid', arg(4))
+    ->execute();
+
   drupal_set_message(t('Tag saved.'));
+  drupal_goto('admin/settings/custom_meta');
 }
