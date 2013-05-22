@@ -17,7 +17,8 @@ function custom_meta_permission() {
 }
 
 /**
- * Implements hook_init().
+ * Implements hook_init.
+ * Places defined custom meta tags in the head of the document for non-administration pages.
  *
  */
 function custom_meta_init() {
@@ -79,10 +80,10 @@ function custom_meta_menu() {
 
 /**
  * custom_meta_get_tags
- * Retrieves the custom tags from the db.
+ * Get a single tag or all custom tags from the db.
  *
- * @param $id: Meta uid of the tag.
- * @return The requested tag.
+ * @param $id (int) unique id of a tag in the db.
+ * @return returns array of specified tag or all tags.
  */
 function custom_meta_get_tags($id = '') {
   $return = '';
@@ -101,11 +102,11 @@ function custom_meta_get_tags($id = '') {
 
 /**
  * custom_meta_set_tag
- * Sets the tag in the database.
+ * Set the custom tags to the db.
  *
- * @param $attr: Tag's attribute type.
- * @param $attr_value: Tag's attribute valur.
- * @param $meta_content: Tag's content.
+ * @param $attr
+ * @param $attr_value
+ * @param $meta_content
  */
 function custom_meta_set_tag($attr, $attr_value, $meta_content) {
   db_insert('custom_meta')
@@ -119,8 +120,7 @@ function custom_meta_set_tag($attr, $attr_value, $meta_content) {
 
 /**
  * custom_meta_remove_tag
- * Deletes the tag in the database.
- *
+ * Deletes the tag from the database.
  */
 function custom_meta_remove_tag() {
   $id = arg(4);
