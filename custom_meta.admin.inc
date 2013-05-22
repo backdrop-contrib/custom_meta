@@ -45,7 +45,7 @@ function custom_meta_form() {
     foreach ($meta_tags as $key => $meta_tag) {
       $form['custom_meta_tags']['meta_tag_' . $key] = array(
         '#prefix' => '<div>',
-        '#value' => '&lt;meta ' . $meta_tag['mls_meta_attr'] . '="' . $meta_tag['mls_meta_attr_value'] . '" content="' . $meta_tag['mls_meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['mls_meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/'. $meta_tag['mls_meta_uid'] . '">Remove</a>',
+        '#value' => '&lt;meta ' . $meta_tag['cm_meta_attr'] . '="' . $meta_tag['cm_meta_attr_value'] . '" content="' . $meta_tag['cm_meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['cm_meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/'. $meta_tag['cm_meta_uid'] . '">Remove</a>',
         '#suffix' => '</div>',
       );
     }
@@ -68,13 +68,13 @@ function custom_meta_edit_form() {
     '#title' => t('Meta attribute value'),
     '#type' => 'textfield',
     '#description' => t('Value for the meta attribute defined above'),
-    '#default_value' => $tag['mls_meta_attr_value']
+    '#default_value' => $tag['cm_meta_attr_value']
   );
   $form['custom_meta_content_value'] = array(
     '#title' => t('Meta content value'),
     '#type' => 'textfield',
     '#description' => t('Value for the meta content defined above'),
-    '#default_value' => $tag['mls_meta_content']
+    '#default_value' => $tag['cm_meta_content']
   );
 
   $form['submit'] = array(
@@ -117,7 +117,7 @@ function custom_meta_form_submit(&$form, &$form_state) {
  * Submission function for custom_meta_edit_form.
  */
 function custom_meta_edit_form_submit(&$form, &$form_state) {
-  db_query("UPDATE {custom_meta} SET mls_meta_attr = '%s', mls_meta_attr_value = '%s', mls_meta_content = '%s' WHERE mls_meta_uid = '%d'", $form_state['clicked_button']['#post']['custom_meta_attribute'], $form_state['clicked_button']['#post']['custom_meta_attribute_value'], $form_state['clicked_button']['#post']['custom_meta_content_value'], arg(4));
+  db_query("UPDATE {custom_meta} SET cm_meta_attr = '%s', cm_meta_attr_value = '%s', cm_meta_content = '%s' WHERE cm_meta_uid = '%d'", $form_state['clicked_button']['#post']['custom_meta_attribute'], $form_state['clicked_button']['#post']['custom_meta_attribute_value'], $form_state['clicked_button']['#post']['custom_meta_content_value'], arg(4));
   drupal_goto('admin/settings/custom_meta');
   drupal_set_message(t('Tag saved.'));
 }

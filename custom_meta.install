@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * mls custom meta install
+ * Custom Meta install
  */
 /**
  * Implements hook_schema().
@@ -13,32 +13,32 @@ function custom_meta_schema() {
   $schema['custom_meta'] = array(
     'description' => t('Table to store meta tag attributes'),
     'fields' => array(
-      'mls_meta_uid' => array(
+      'cm_meta_uid' => array(
         'description' => t('Unique id for the tweet block'),
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'mls_meta_attr' => array(
+      'cm_meta_attr' => array(
         'description' => t('Meta attribute name'),
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
-      'mls_meta_attr_value' => array(
+      'cm_meta_attr_value' => array(
         'description' => t('Meta attribute value'),
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
-      'mls_meta_content' => array(
+      'cm_meta_content' => array(
         'description' => t('Meta content value'),
         'type' => 'varchar',
         'length' => '255',
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('mls_meta_uid'),
+    'primary key' => array('cm_meta_uid'),
   );
 
   return $schema;

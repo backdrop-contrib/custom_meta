@@ -19,9 +19,10 @@ function custom_meta_perm() {
  */
 function custom_meta_init() {
   $data = '';
+  $meta_tags = custom_meta_get_tags(NULL);
   if ($meta_tags && arg(0) != 'admin') {
     foreach ($meta_tags as $key => $meta_tag) {
-      $data .= '<meta ' . check_plain($meta_tag['mls_meta_attr']) . '="' . check_plain($meta_tag['mls_meta_attr_value']) . '" content="' . check_plain($meta_tag['mls_meta_content']) . '">';
+      $data .= '<meta ' . check_plain($meta_tag['cm_meta_attr']) . '="' . check_plain($meta_tag['cm_meta_attr_value']) . '" content="' . check_plain($meta_tag['cm_meta_content']) . '">';
     }
   }
   drupal_set_html_head($data);
@@ -70,7 +71,7 @@ function custom_meta_menu() {
 function custom_meta_get_tags($id) {
   $return = '';
   if ($id) {
-    $result = db_query("SELECT * FROM {custom_meta} WHERE mls_meta_uid='%d'", $id);
+    $result = db_query("SELECT * FROM {custom_meta} WHERE cm_meta_uid='%d'", $id);
     return db_fetch_array($result);
   }
   else {
@@ -89,11 +90,11 @@ function custom_meta_get_tags($id) {
  * @param $meta_content
  */
 function custom_meta_set_tag($attr, $attr_value, $meta_content) {
-  db_query("INSERT INTO {custom_meta} (mls_meta_attr, mls_meta_attr_value, mls_meta_content) VALUES ('%s', '%s', '%s')", $attr, $attr_value, $meta_content);
+  db_query("INSERT INTO {custom_meta} (cm_meta_attr, cm_meta_attr_value, cm_meta_content) VALUES ('%s', '%s', '%s')", $attr, $attr_value, $meta_content);
 }
 
 /**
- * Delete the tag in the db.
+ * Deletes the tag from the db.
  */
 function custom_meta_remove_tag() {
   $id = arg(4);
