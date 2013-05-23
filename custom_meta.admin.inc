@@ -2,7 +2,7 @@
 /**
  * @file
  * Admin form to add custom meta tags
- * custom_meta_form. Hans.Gutknecht@mlssoccer.com
+ * custom_meta_form. Hans.Gutknecht@mlssoccer.com, Louis.Jimenez@mlssoccer.com
  *
  */
 function custom_meta_form() {
