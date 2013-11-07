@@ -14,7 +14,7 @@ function custom_meta_schema() {
     'description' => 'Table to store meta tag attributes',
     'fields' => array(
       'meta_uid' => array(
-        'description' => 'Unique id for the tweet block',
+        'description' => 'Unique id for the tag',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
