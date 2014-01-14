@@ -53,7 +53,7 @@ function custom_meta_form() {
     foreach ($meta_tags as $key => $meta_tag) {
       $form['custom_meta_tags']['meta_tag_' . $key] = array(
         '#prefix' => '<div>',
-        '#markup' => '&lt;meta ' . $meta_tag['meta_attr'] . '="' . $meta_tag['meta_attr_value'] . '" content="' . $meta_tag['meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/' . $meta_tag['meta_uid'] . '">Remove</a>',
+        '#markup' => '&lt;meta ' . $meta_tag['meta_attr'] . '="' . $meta_tag['meta_attr_value'] . '" content="' . $meta_tag['meta_content'] . '"&gt; <div class="actions"><a href="/admin/config/search/custom_meta/edit/' . $meta_tag['meta_uid'] . '">Edit</a> | <a href="/admin/config/search/custom_meta/remove/' . $meta_tag['meta_uid'] . '">Remove</a>',
         '#suffix' => '</div>',
       );
     }
@@ -70,13 +70,13 @@ function custom_meta_form() {
  */
 function custom_meta_edit_form() {
   $form = array();
-  $id = arg(4);
+  $id = arg(5);
   $tag = custom_meta_get_tags($id);
   $form['custom_meta_attribute'] = array(
     '#title' => t('Meta attribute'),
     '#type' => 'select',
     '#description' => t('Either property, name or http-equiv'),
-    '#default_value' => 'wtf',
+    '#default_value' => $tag['meta_attr'],
     '#options' => array('property' => 'property', 'name' => 'name', 'http-equiv' => 'http-equiv')
   );
   $form['custom_meta_attribute_value'] = array(
@@ -98,7 +98,7 @@ function custom_meta_edit_form() {
   );
 
   $form['cancel'] = array(
-   '#markup' => '<a href="/admin/settings/custom_meta">' . t('Cancel') . '</a>',
+   '#markup' => '<a href="/admin/config/search/custom_meta">' . t('Cancel') . '</a>',
   );
 
   return $form;
@@ -149,9 +149,9 @@ function custom_meta_edit_form_submit(&$form, &$form_state) {
       'meta_attr_value' => $form_state['input']['custom_meta_attribute_value'],
       'meta_content' => $form_state['input']['custom_meta_content_value']
     ))
-    -> condition('meta_uid', arg(4))
+    -> condition('meta_uid', arg(5))
     ->execute();
 
   drupal_set_message(t('Tag saved.'));
-  drupal_goto('admin/settings/custom_meta');
+  drupal_goto('admin/config/search/custom_meta');
 }

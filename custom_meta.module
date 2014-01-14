@@ -46,7 +46,7 @@ function custom_meta_init() {
 function custom_meta_menu() {
   $items = array();
 
-  $items['admin/settings/custom_meta'] = array(
+  $items['admin/config/search/custom_meta'] = array(
     'type' => MENU_NORMAL_ITEM,
     'title' => 'Custom Meta Tag Settings',
     'description' => 'Settings for custom_meta',
@@ -57,19 +57,19 @@ function custom_meta_menu() {
     'access arguments' => array('administer custom meta settings'),
   );
 
-  $items['admin/settings/custom_meta/edit/%'] = array(
+  $items['admin/config/search/custom_meta/edit/%'] = array(
     'title' => 'Meta Settings Edit Tag',
     'description' => 'Re-configure existing tags.',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('custom_meta_edit_form', 4),
+    'page arguments' => array('custom_meta_edit_form', 5),
     'file' => 'custom_meta.admin.inc',
     'access arguments' => array('administer custom meta settings'),
     'type' => MENU_CALLBACK,
   );
 
-  $items['admin/settings/custom_meta/remove/%'] = array(
+  $items['admin/config/search/custom_meta/remove/%'] = array(
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('custom_meta_remove_tag', 4),
+    'page arguments' => array('custom_meta_remove_tag', 5),
     'file' => 'custom_meta.admin.inc',
     'access arguments' => array('administer custom meta settings'),
     'type' => MENU_CALLBACK,
@@ -123,12 +123,10 @@ function custom_meta_set_tag($attr, $attr_value, $meta_content) {
  * Deletes the tag from the database.
  */
 function custom_meta_remove_tag() {
-  $id = arg(4);
-
+  $id = arg(5);
   db_delete('custom_meta')
     ->condition('meta_uid', $id)
     ->execute();
-
   drupal_set_message(t('Tag removed.'));
-  drupal_goto('admin/settings/custom_meta');
+  drupal_goto('admin/config/search/custom_meta');
 }
