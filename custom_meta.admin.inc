@@ -53,7 +53,7 @@ function custom_meta_form() {
     foreach ($meta_tags as $key => $meta_tag) {
       $form['custom_meta_tags']['meta_tag_' . $key] = array(
         '#prefix' => '<div>',
-        '#markup' => '&lt;meta ' . $meta_tag['meta_attr'] . '="' . $meta_tag['meta_attr_value'] . '" content="' . $meta_tag['meta_content'] . '"&gt; <div class="actions"><a href="/admin/config/search/custom_meta/edit/' . $meta_tag['meta_uid'] . '">Edit</a> | <a href="/admin/config/search/custom_meta/remove/' . $meta_tag['meta_uid'] . '">Remove</a>',
+        '#markup' => '&lt;meta ' . check_plain($meta_tag['meta_attr']) . '="' . check_plain($meta_tag['meta_attr_value']) . '" content="' . check_plain($meta_tag['meta_content']) . '"&gt; <div class="actions"><a href="/admin/config/search/custom_meta/edit/' . check_plain($meta_tag['meta_uid']) . '">Edit</a> | <a href="/admin/config/search/custom_meta/remove/' . check_plain($meta_tag['meta_uid']) . '">Remove</a>',
         '#suffix' => '</div>',
       );
     }
