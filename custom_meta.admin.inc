@@ -45,7 +45,7 @@ function custom_meta_form() {
     foreach ($meta_tags as $key => $meta_tag) {
       $form['custom_meta_tags']['meta_tag_' . $key] = array(
         '#prefix' => '<div>',
-        '#value' => '&lt;meta ' . $meta_tag['cm_meta_attr'] . '="' . $meta_tag['cm_meta_attr_value'] . '" content="' . $meta_tag['cm_meta_content'] . '"&gt; <div class="actions"><a href="custom_meta/edit/' . $meta_tag['cm_meta_uid'] . '">Edit</a> | <a href="custom_meta/remove/'. $meta_tag['cm_meta_uid'] . '">Remove</a>',
+        '#value' => '&lt;meta ' . check_plain($meta_tag['cm_meta_attr']) . '="' . check_plain($meta_tag['cm_meta_attr_value']) . '" content="' . check_plain($meta_tag['cm_meta_content']) . '"&gt; <div class="actions"><a href="custom_meta/edit/' . check_plain($meta_tag['cm_meta_uid']) . '">Edit</a> | <a href="custom_meta/remove/'. check_plain($meta_tag['cm_meta_uid']) . '">Remove</a>',
         '#suffix' => '</div>',
       );
     }
