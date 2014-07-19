@@ -22,18 +22,28 @@ function custom_meta_permission() {
  *
  */
 function custom_meta_init() {
-  $data = '';
+  global $user;
+
+  $markup = '';
+  $token_data = array();
   $meta_tags = custom_meta_get_tags(NULL);
+
   // Place tags in html head if not in admin section
   if ($meta_tags && arg(0) != 'admin') {
+    $token_data['node'] = menu_get_object();
+    $token_data['user'] = $user;
+    $token_data['term'] = (arg(0) == 'taxonomy' && arg(1) == 'term' && is_numeric(arg(2))) ? taxonomy_term_load(arg(2)) : NULL;
+
     foreach ($meta_tags as $key => $meta_tag) {
-      $data .= '<meta ' . check_plain($meta_tag['meta_attr']) . '="' . check_plain($meta_tag['meta_attr_value']) . '" content="' . check_plain($meta_tag['meta_content']) . '">';
+      $tag = '<meta ' . check_plain($meta_tag['meta_attr']) . '="' . check_plain($meta_tag['meta_attr_value']) . '" content="' . check_plain($meta_tag['meta_content']) . '">';
+      $tag = token_replace($tag, array('node' => $token_data['node'], 'user' => $token_data['user'], 'term' => $token_data['term']), array('sanitize' => TRUE, 'clear' => TRUE));
+      $markup .= $tag;
     }
   }
 
   $all_tags = array(
     '#type' => 'markup',
-    '#markup' => $data
+    '#markup' => $markup
   );
 
   drupal_add_html_head($all_tags, 'custom_meta_tags');

@@ -38,6 +38,16 @@ function custom_meta_form() {
       '#default_value' => variable_get('custom_meta_content_value', '')
   );
 
+  $form['tokens'] = array(
+    '#theme' => 'token_tree',
+    '#token_types' => array('node', 'term', 'user'),
+    '#global_types' => TRUE,
+    '#click_insert' => TRUE,
+    '#dialog' => TRUE,
+    '#prefix' => '<div style="margin-bottom: 1em">',
+    '#suffix' => '</div>',
+  );
+
   $form['submit'] = array(
    '#type' => 'submit',
    '#value' => t('Add tag'),
