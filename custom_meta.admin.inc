@@ -8,7 +8,7 @@
 
 /**
  * custom_meta_form
- * Creates admin form.
+ * Administration form for creating, editing and removing custom meta tags.
  *
  * @return Form for administering module.
  */
@@ -16,7 +16,7 @@ function custom_meta_form() {
   $form = array();
   $form['description'] = array(
     '#prefix' => '<div>',
-    '#markup' => 'The Custom Meta module provides an interface for adding meta tags. This will add the created meta tags to the html head of all non-admin pages. Be careful with the http-equiv meta attribute, these are added to <strong>ALL PAGES</strong>, so you could very easily break your site with redirects, expires, etc.<br /><br />Formatting for tags <em>&lt;meta [Meta Attribute]="[Attribute Value]" content="[Content value]"&gt;</em>',
+    '#markup' => 'The Custom Meta module provides an interface for adding meta tags. This will add the created meta tags to the html head of all non-admin pages. NOTE: <strong>Be careful with the http-equiv meta attribute, these are added to ALL PAGES, so you could very easily break your site with redirects, expires, etc.</strong><br /><br />Formatting for tags <em>&lt;meta [Meta Attribute]="[Attribute Value]" content="[Content value]"&gt;</em>',
     '#suffix' => '</div>',
   );
   $form['custom_meta_attribute'] = array(

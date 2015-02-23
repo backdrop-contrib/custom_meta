@@ -6,6 +6,7 @@
 
 /**
  * Implements hook_schema().
+ * Define SQL table for custom_meta
  */
 function custom_meta_schema() {
   $schema = array();

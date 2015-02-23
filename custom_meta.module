@@ -19,6 +19,7 @@ function custom_meta_permission() {
 /**
  * Implements hook_init.
  * Places defined custom meta tags in the head of the document for non-administration pages.
+ * Exposes tokens for use in the tag creation.
  *
  */
 function custom_meta_init() {
