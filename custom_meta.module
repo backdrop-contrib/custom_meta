@@ -11,7 +11,7 @@
 function custom_meta_permission() {
   return array(
     'administer custom meta settings' => array(
-      'title' => t('administer custom meta settings')
+      'title' => t('Administer custom meta settings')
     )
   );
 }
