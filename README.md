@@ -21,6 +21,7 @@ complete text.
 ## Current Maintainers
 
 * Jerad Bitner (https://github.com/sirkitree/)
+* Hans Gutknecht (https://github.com/hgutknecht/)
 
 ## Credits
 
