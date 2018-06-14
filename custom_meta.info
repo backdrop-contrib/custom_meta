@@ -2,5 +2,6 @@ name = Custom Meta
 description = Adds user-defined custom meta tags.
 package = Third Party Integration
 backdrop = 1.x
+type = module
 configure = admin/config/search/custom_meta
 files[] = custom_meta.module
