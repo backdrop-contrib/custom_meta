@@ -140,7 +140,7 @@ function custom_meta_form_validate($form, &$form_state) {
  * @param &$form_state: Reference to state of custom_meta_form.
  */
 function custom_meta_form_submit(&$form, &$form_state) {
-  drupal_set_message(t('All your tag belong to us. Tag saved.'));
+  backdrop_set_message(t('All your tag belong to us. Tag saved.'));
 
   custom_meta_set_tag($form_state['values']['custom_meta_attribute'], $form_state['values']['custom_meta_attribute_value'], $form_state['values']['custom_meta_content_value']);
 }
@@ -162,6 +162,6 @@ function custom_meta_edit_form_submit(&$form, &$form_state) {
     -> condition('meta_uid', arg(5))
     ->execute();
 
-  drupal_set_message(t('Tag saved.'));
-  drupal_goto('admin/config/search/custom_meta');
+  backdrop_set_message(t('Tag saved.'));
+  backdrop_goto('admin/config/search/custom_meta');
 }
