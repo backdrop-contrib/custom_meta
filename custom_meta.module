@@ -47,7 +47,7 @@ function custom_meta_init() {
     '#markup' => $markup
   );
 
-  drupal_add_html_head($all_tags, 'custom_meta_tags');
+  backdrop_add_html_head($all_tags, 'custom_meta_tags');
 }
 
 /**
@@ -61,7 +61,7 @@ function custom_meta_menu() {
     'type' => MENU_NORMAL_ITEM,
     'title' => 'Custom Meta Tag Settings',
     'description' => 'Settings for custom_meta',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('custom_meta_form'),
     'file' => 'custom_meta.admin.inc',
     'access callback' => 'user_access',
@@ -71,7 +71,7 @@ function custom_meta_menu() {
   $items['admin/config/search/custom_meta/edit/%'] = array(
     'title' => 'Meta Settings Edit Tag',
     'description' => 'Re-configure existing tags.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('custom_meta_edit_form', 5),
     'file' => 'custom_meta.admin.inc',
     'access arguments' => array('administer custom meta settings'),
@@ -79,7 +79,7 @@ function custom_meta_menu() {
   );
 
   $items['admin/config/search/custom_meta/remove/%'] = array(
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('custom_meta_remove_tag', 5),
     'file' => 'custom_meta.admin.inc',
     'access arguments' => array('administer custom meta settings'),
@@ -93,8 +93,10 @@ function custom_meta_menu() {
  * custom_meta_get_tags
  * Get a single tag or all custom tags from the db.
  *
- * @param $id (int) unique id of a tag in the db.
- * @return returns array of specified tag or all tags.
+ * @param int $id
+ *   Unique id of a tag in the db.
+ * @return array
+ *   Array of specified tag or all tags.
  */
 function custom_meta_get_tags($id = '') {
   $return = '';
@@ -103,6 +105,7 @@ function custom_meta_get_tags($id = '') {
     return $result->fetchAssoc();
   }
   else {
+    $return = [];
     $result = db_query("SELECT * FROM {custom_meta}");
     while ($row = $result->fetchAssoc()) {
       $return[] = $row;
@@ -115,9 +118,9 @@ function custom_meta_get_tags($id = '') {
  * custom_meta_set_tag
  * Set the custom tags to the db.
  *
- * @param $attr
- * @param $attr_value
- * @param $meta_content
+ * @param string $attr
+ * @param string $attr_value
+ * @param string $meta_content
  */
 function custom_meta_set_tag($attr, $attr_value, $meta_content) {
   db_insert('custom_meta')
@@ -138,6 +141,6 @@ function custom_meta_remove_tag() {
   db_delete('custom_meta')
     ->condition('meta_uid', $id)
     ->execute();
-  drupal_set_message(t('Tag removed.'));
-  drupal_goto('admin/config/search/custom_meta');
+  backdrop_set_message(t('Tag removed.'));
+  backdrop_goto('admin/config/search/custom_meta');
 }
