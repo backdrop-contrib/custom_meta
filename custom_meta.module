@@ -97,12 +97,12 @@ function custom_meta_menu() {
  * @return returns array of specified tag or all tags.
  */
 function custom_meta_get_tags($id = '') {
-  $return = '';
   if ($id) {
     $result = db_query("SELECT * FROM {custom_meta} WHERE meta_uid=:id", array(':id' => $id));
     return $result->fetchAssoc();
   }
   else {
+    $return = array();
     $result = db_query("SELECT * FROM {custom_meta}");
     while ($row = $result->fetchAssoc()) {
       $return[] = $row;
